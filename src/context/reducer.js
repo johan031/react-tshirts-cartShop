@@ -27,6 +27,28 @@ const reducer = (state, action) => {
       .filter((item) => item.amount !== 0);
     return { ...state, cart: tempCart };
   }
+
+  if (action.type === "GET_TOTAL") {
+    let { total, amount } = state.cart.reduce(
+      (cartTotal, item) => {
+        const { price, amount } = item;
+        const itemTotal = price * amount;
+
+        cartTotal.total += itemTotal;
+        cartTotal.amount += amount;
+        return cartTotal;
+      },
+      {
+        total: 0,
+        amount: 0,
+      }
+    );
+    total = parseFloat(total.toFixed(2));
+
+    return { ...state, total, amount };
+  }
+
+  throw new Error("no matching action type");
 };
 
 export default reducer;

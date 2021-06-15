@@ -25,8 +25,18 @@ const AppProvider = ({ children }) => {
     dispatch({ type: "DECREASE", payload: id });
   };
 
+  const getTotals = () => {
+    dispatch({ type: "GET_TOTAL" });
+  };
+
+  useEffect(() => {
+    dispatch({ type: "GET_TOTAL" });
+  }, [state.cart]);
+
   return (
-    <AppContext.Provider value={{ ...state, remove, increase, decrease }}>
+    <AppContext.Provider
+      value={{ ...state, remove, increase, decrease, getTotals }}
+    >
       {children}
     </AppContext.Provider>
   );
